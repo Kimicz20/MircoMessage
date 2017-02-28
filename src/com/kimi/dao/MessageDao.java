@@ -81,4 +81,24 @@ public class MessageDao {
 		return messageList;
 	}
 	
+	public void deleteOneMessage(int id){
+		DBAccess access = new DBAccess();
+		SqlSession sqlSession = null;
+		try {
+			//1.获取SqlSession
+			sqlSession = access.getSqlSession();
+			//2.执行SQL语句
+			sqlSession.delete("Message.deleteOne", id);
+			//3.事务提交
+			sqlSession.commit();
+			System.out.println(id);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			if(sqlSession !=null){
+				sqlSession.close();
+			}
+		}
+	}
+	
 }

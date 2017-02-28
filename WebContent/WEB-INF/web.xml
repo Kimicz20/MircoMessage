@@ -12,4 +12,15 @@
     <servlet-name>ListServlet</servlet-name>
     <url-pattern>/List.action</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>DeleteOneServlet</display-name>
+    <servlet-name>DeleteOneServlet</servlet-name>
+    <servlet-class>com.kimi.servelet.DeleteOneServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteOneServlet</servlet-name>
+    <url-pattern>/DeleteOne.action</url-pattern>
+  </servlet-mapping>
 </web-app>

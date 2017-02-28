@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Message">
+
+	<!-- 配置返回对象类 -->
+	<resultMap type="com.kimi.bean.Message" id="MessageResult">
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		<result column="COMMAND" jdbcType="VARCHAR" property="command" />
+		<result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+		<result column="CONTENT" jdbcType="VARCHAR" property="content" />
+	</resultMap>
+
+	<select id="queryMessage" parameterType="com.kimi.bean.Message"
+		resultMap="MessageResult">
+		SELECT ID,COMMAND,DESCRIPTION,CONTENT FROM message WHERE 1=1
+		<if test="command != null &amp;&amp; !&quot;&quot;.equals(command.trim())">
+			and COMMAND=#{command}
+		</if>
+		<if test="description != null &amp;&amp; !&quot;&quot;.equals(description.trim())">
+			and DESCRIPTION like '%' #{description} '%'
+		</if>
+	</select>
+	
+	<delete id="deleteOne" parameterType="int">
+		DELETE FROM message WHERE ID=#{_parameter}
+	</delete>
+</mapper>
