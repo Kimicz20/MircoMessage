@@ -13,6 +13,8 @@
 <title>内容列表页面</title>
 <link href="<%=basePath%>resources/css/all.css" rel="stylesheet"
 	type="text/css" />
+<script src="<%=basePath%>resources/js/jquery-1.8.0.min.js" ></script>
+<script src="<%=basePath%>resources/js/list.js" /></script>
 </head>
 <body style="background: #e1e9eb;">
 	<form action="<%=basePath %>List.action" id="mainForm" method="post">
@@ -23,8 +25,10 @@
 			</div>
 			<div class="rightCont">
 				<p class="g_title fix">
-					内容列表 <a class="btn03" href="#">新 增</a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-						class="btn03" href="#">删 除</a>
+					内容列表 
+					<a class="btn03" href="#">新 增</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<a class="btn03" href="javascript:deleteBatch('<%=basePath %>');">删 除</a>
 				</p>
 				<table class="tab1">
 					<tbody>
@@ -52,7 +56,7 @@
 								varStatus="status">
 								<tr
 									<c:if test="${status.index % 2 != 0 }">style='background-color:#ECF6EE'</c:if>>
-									<td><input type="checkbox" /></td>
+									<td><input type="checkbox" name="id" value="${status.index + 1 }"/></td>
 									<td>${status.index + 1 }</td>
 									<td>${message.command}</td>
 									<td>${message.description}</td>

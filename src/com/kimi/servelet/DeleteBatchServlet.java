@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.kimi.service.MaintainService;
 
-public class DeleteOneServlet extends HttpServlet{
+public class DeleteBatchServlet extends HttpServlet{
 
 	/**
 	 * 
@@ -17,13 +17,13 @@ public class DeleteOneServlet extends HttpServlet{
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		MaintainService deleteOneService = new MaintainService();
+		MaintainService maintainService = new MaintainService();
 		//1.设置页面编码
 		request.setCharacterEncoding("UTF-8");
 		//2.获取查询数据
-		String id = request.getParameter("id");
+		String[] ids = request.getParameterValues("id");
 		//3.查询
-		deleteOneService.deleteOneMessage(id);
+		maintainService.deleteBatch(ids);
 		//4.查询页面跳转
 		request.getRequestDispatcher("/List.action").forward(request, response);
 	}
