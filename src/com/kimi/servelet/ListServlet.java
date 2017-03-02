@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kimi.service.ListService;
+import com.kimi.service.QueryService;
 
 /**
  * 列表页面初始化
@@ -28,7 +28,7 @@ public class ListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ListService listService = new ListService();
+		QueryService listService = new QueryService();
 		
 		//1.设置页面编码
 		request.setCharacterEncoding("UTF-8");

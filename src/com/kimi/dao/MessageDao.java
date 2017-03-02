@@ -85,7 +85,10 @@ public class MessageDao {
 			//1.获取SqlSession
 			sqlSession = access.getSqlSession();
 			//2.执行SQL语句
-			messageList = sqlSession.selectList("Message.queryMessage", message);
+			//messageList = sqlSession.selectList("Message.queryMessage", message);
+			//使用接口编程方式
+			IMessage imessage = sqlSession.getMapper(IMessage.class);
+			messageList = imessage.queryMessage(message);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally{
@@ -95,7 +98,7 @@ public class MessageDao {
 		}
 		return messageList;
 	}
-	
+
 	/**
 	 * 单条删除
 	 * @param id
@@ -107,7 +110,10 @@ public class MessageDao {
 			//1.获取SqlSession
 			sqlSession = access.getSqlSession();
 			//2.执行SQL语句
-			sqlSession.delete("Message.deleteOne", id);
+//			sqlSession.delete("Message.deleteOne", id);
+			//接口式编程
+			IMessage imessage = sqlSession.getMapper(IMessage.class);
+			imessage.deleteOne(id);
 			//3.事务提交
 			sqlSession.commit();
 		} catch (IOException e) {
@@ -129,7 +135,10 @@ public class MessageDao {
 			//1.获取SqlSession
 			sqlSession = access.getSqlSession();
 			//2.执行SQL语句
-			sqlSession.delete("Message.deleteBatch", ids);
+//			sqlSession.delete("Message.deleteBatch", ids);
+			//接口式编程
+			IMessage imessage = sqlSession.getMapper(IMessage.class);
+			imessage.deleteBatch(ids);
 			//3.事务提交
 			sqlSession.commit();
 		} catch (IOException e) {

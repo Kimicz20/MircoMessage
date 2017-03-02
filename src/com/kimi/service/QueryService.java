@@ -9,7 +9,7 @@ import com.kimi.dao.MessageDao;
  * @author geek
  *
  */
-public class ListService {
+public class QueryService {
 	
 	/**
 	 * ≤È—Ø–≈œ¢
@@ -20,6 +20,16 @@ public class ListService {
 	public List<Message> queryMessage(String command, String description) {
 		MessageDao dao = new MessageDao();
 		return dao.queryMessage(command, description);
+	}
+	
+	public String autoReply(String command){
+		MessageDao dao = new MessageDao();
+		List<Message> list = dao.queryMessage(command,null);
+		if(list.size() >0){
+			return list.get(0).getContent();
+		}
+		
+		return "";
 	}
 
 }
