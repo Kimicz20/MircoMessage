@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -74,13 +75,10 @@ public class MessageDao {
 	 * @param description
 	 * @return
 	 */
-	public List<Message> queryMessage(String command, String description) {
+	public List<Message> queryMessage(Map<String,Object> parameter) {
 		DBAccess access = new DBAccess();
 		SqlSession sqlSession = null;
-		List<Message> messageList = new ArrayList<Message>();
-		Message message = new Message();
-		message.setCommand(command);
-		message.setDescription(description);
+		List<Message> messageList = new ArrayList<Message>();		
 		try {
 			//1.获取SqlSession
 			sqlSession = access.getSqlSession();
@@ -88,7 +86,7 @@ public class MessageDao {
 			//messageList = sqlSession.selectList("Message.queryMessage", message);
 			//使用接口编程方式
 			IMessage imessage = sqlSession.getMapper(IMessage.class);
-			messageList = imessage.queryMessage(message);
+			messageList = imessage.queryMessageList(parameter);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally{
@@ -98,7 +96,31 @@ public class MessageDao {
 		}
 		return messageList;
 	}
-
+	/**
+	 * 根据查询条件查询消息列表的条数
+	 * @param message
+	 * @return
+	 */
+	public int count(Message message){
+		DBAccess access = new DBAccess();
+		SqlSession sqlSession = null;
+		int result = 0;
+		try {
+			//1.获取SqlSession
+			sqlSession = access.getSqlSession();
+			//2.执行SQL语句
+			IMessage imessage = sqlSession.getMapper(IMessage.class);
+			result = imessage.count(message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			if(sqlSession !=null){
+				sqlSession.close();
+			}
+		}
+		return result;
+		
+	}
 	/**
 	 * 单条删除
 	 * @param id

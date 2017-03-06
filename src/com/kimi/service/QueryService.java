@@ -1,9 +1,12 @@
 package com.kimi.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.kimi.bean.Message;
 import com.kimi.dao.MessageDao;
+import com.kimi.entity.Page;
 /**
  * 查询页面服务类
  * @author geek
@@ -12,24 +15,36 @@ import com.kimi.dao.MessageDao;
 public class QueryService {
 	
 	/**
-	 * 查询信息
-	 * @param command 命令
-	 * @param description 描述
-	 * @return 
+	 * 分页查询
+	 * @param command
+	 * @param description
+	 * @param page
+	 * @return
 	 */
-	public List<Message> queryMessage(String command, String description) {
+	public List<Message> queryMessageWithPage(String command, String description,Page page) {
 		MessageDao dao = new MessageDao();
-		return dao.queryMessage(command, description);
+		//1.构建消息对象
+		Message message = new Message();
+		message.setCommand(command);
+		message.setDescription(description);
+		//2.计算查询条数
+		int totalNumber = dao.count(message);
+		//3.组织分页查询参数
+		page.setTotalNumber(totalNumber);
+		Map<String,Object> parameter = new HashMap<String,Object>();
+		parameter.put("message", message);
+		parameter.put("page", page);
+		return dao.queryMessage(parameter);
 	}
 	
-	public String autoReply(String command){
-		MessageDao dao = new MessageDao();
-		List<Message> list = dao.queryMessage(command,null);
-		if(list.size() >0){
-			return list.get(0).getContent();
-		}
-		
-		return "";
-	}
+//	public String autoReply(String command){
+//		MessageDao dao = new MessageDao();
+//		List<Message> list = dao.queryMessage(command,null);
+//		if(list.size() >0){
+//			return list.get(0).getContent();
+//		}
+//		
+//		return "";
+//	}
 
 }

@@ -25,6 +25,33 @@
 		</if>
 	</select>
 	
+	<!-- 分页查询 -->
+	<select id="queryMessageList" parameterType="java.util.Map"
+		resultMap="MessageResult">
+		SELECT ID,COMMAND,DESCRIPTION,CONTENT FROM message
+		<where>
+			<if test="message.command != null &amp;&amp; !&quot;&quot;.equals(message.command.trim())">
+			and COMMAND=#{message.command}
+		</if>
+		<if test="message.description != null &amp;&amp; !&quot;&quot;.equals(message.description.trim())">
+			and DESCRIPTION like '%' #{message.description} '%'
+		</if>
+		</where>
+		order by ID limit #{page.dbIndex},#{page.dbNumber}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="count" parameterType="com.kimi.bean.Message"
+		resultType="int">
+		SELECT count(*) FROM message
+		<if test="command != null &amp;&amp; !&quot;&quot;.equals(command.trim())">
+			and COMMAND=#{command}
+		</if>
+		<if test="description != null &amp;&amp; !&quot;&quot;.equals(description.trim())">
+			and DESCRIPTION like '%' #{description} '%'
+		</if>
+	</select>
+	
 	<delete id="deleteOne" parameterType="int">
 		DELETE FROM message WHERE ID=#{_parameter}
 	</delete>

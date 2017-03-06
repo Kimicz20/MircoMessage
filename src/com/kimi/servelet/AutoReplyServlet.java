@@ -19,11 +19,11 @@ public class AutoReplyServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		resp.setContentType("text/html;charset=utf-8");
-		PrintWriter out = resp.getWriter();
-		QueryService queryService = new QueryService();
-		out.write(queryService.autoReply(req.getParameter("content")));
-		out.flush();
-		out.close();
+//		PrintWriter out = resp.getWriter();
+//		QueryService queryService = new QueryService();
+//		out.write(queryService.autoReply(req.getParameter("content")));
+//		out.flush();
+//		out.close();
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
