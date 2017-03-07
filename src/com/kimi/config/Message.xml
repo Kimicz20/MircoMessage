@@ -40,6 +40,21 @@
 		order by ID limit #{page.dbIndex},#{page.dbNumber}
 	</select>
 	
+	<!-- 拦截器分页查询 -->
+	<select id="queryMessageListByPage" parameterType="java.util.Map"
+		resultMap="MessageResult">
+		SELECT ID,COMMAND,DESCRIPTION,CONTENT FROM message
+		<where>
+			<if test="message.command != null &amp;&amp; !&quot;&quot;.equals(message.command.trim())">
+			and COMMAND=#{message.command}
+		</if>
+		<if test="message.description != null &amp;&amp; !&quot;&quot;.equals(message.description.trim())">
+			and DESCRIPTION like '%' #{message.description} '%'
+		</if>
+		</where>
+		order by ID
+	</select>
+	
 	<!-- 查询总条数 -->
 	<select id="count" parameterType="com.kimi.bean.Message"
 		resultType="int">

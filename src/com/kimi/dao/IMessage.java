@@ -9,7 +9,7 @@ public interface IMessage {
 	/*
 	 * 查询数据库
 	 */
-	public List<Message> queryMessageList(Map<String, Object> parameter);
+	public List<Message> queryMessageListByPage(Map<String, Object> parameter);
 
 	/*
 	 * 分页查询数据库

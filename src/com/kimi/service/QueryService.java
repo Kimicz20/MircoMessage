@@ -27,24 +27,10 @@ public class QueryService {
 		Message message = new Message();
 		message.setCommand(command);
 		message.setDescription(description);
-		//2.计算查询条数
-		int totalNumber = dao.count(message);
-		//3.组织分页查询参数
-		page.setTotalNumber(totalNumber);
 		Map<String,Object> parameter = new HashMap<String,Object>();
 		parameter.put("message", message);
 		parameter.put("page", page);
 		return dao.queryMessage(parameter);
 	}
 	
-//	public String autoReply(String command){
-//		MessageDao dao = new MessageDao();
-//		List<Message> list = dao.queryMessage(command,null);
-//		if(list.size() >0){
-//			return list.get(0).getContent();
-//		}
-//		
-//		return "";
-//	}
-
 }
